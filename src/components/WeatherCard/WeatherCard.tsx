@@ -1,5 +1,4 @@
 import styles from "./weathercard.module.css";
-import { Link } from "react-router-dom";
 
 import { FaCloudRain, FaSun } from "react-icons/fa6";
 import { BsCloudSun } from "react-icons/bs";
@@ -42,9 +41,6 @@ export default function WeatherCard(props: Props) {
       {statusIcon[status]}
       <h2 className={styles.temperature}>{props.temperature}°</h2>
       <p className={styles.status}>{status}</p>
-      <span className={styles.more}>
-        <Link to="">more &gt;</Link>
-      </span>
     </div>
   );
 }
