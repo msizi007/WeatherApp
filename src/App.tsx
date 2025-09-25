@@ -5,6 +5,7 @@ import Searchbar from "./components/Searchbar/Searchbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Hourlychart from "./components/HourlyChart/Hourlychart";
+import { addCity } from "./utils/storage";
 
 interface Hour {
   temp_c: number;
@@ -42,6 +43,16 @@ function App() {
   const [search, setSearch] = useState("");
   const [hourlyTemp, setHourlyTemp] = useState<number[]>([]);
   const [hourlyRain, setHourlyRain] = useState<number[]>([]);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+      document.documentElement.setAttribute("data-theme", "light");
+    }
+  }, [isDarkMode]);
+
   const fetchWeather = async (q: string, days: number) => {
     try {
       const response = await axios.get(
@@ -73,12 +84,12 @@ function App() {
           (hour: Hour) => hour.chance_of_rain
         )
       );
-      console.log("forecast...", response.data.forecast.forecastday[0]);
+
+      addCity({ name: response.data.location.name, isPinned: false });
     } catch (err) {
       console.error("Failed to fetch weather:", err);
     }
   };
-
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -104,7 +115,12 @@ function App() {
     <>
       {weatherData ? (
         <>
-          <Header location={city} />
+          <Header
+            location={city}
+            isDarkMode={isDarkMode}
+            setIsDarkMode={setIsDarkMode}
+            onSearch={(city) => fetchWeather(city, 7)}
+          />
           <Searchbar
             input={search}
             setInput={setSearch}

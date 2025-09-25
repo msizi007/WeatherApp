@@ -1,9 +1,21 @@
 import { useState } from "react";
 import styles from "./header.module.css";
-import { BsMenuButtonFill, BsPin } from "react-icons/bs";
+import {
+  BsMenuButtonFill,
+  BsMoon,
+  BsMoonFill,
+  BsPin,
+  BsPinFill,
+  BsSun,
+  BsSunFill,
+} from "react-icons/bs";
+import { isCityPinned, pinCity, type City } from "../../utils/storage";
 
 interface Props {
   location: string;
+  isDarkMode: boolean;
+  setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+  onSearch: (city: string) => void;
 }
 
 export default function Header(props: Props) {
@@ -22,22 +34,67 @@ export default function Header(props: Props) {
           X
         </span>
         <div className={styles.sidebarMenus}>
-          <button className={styles.sidebarButton}>User</button>
-          <button className={styles.sidebarButton}>Locations</button>
-          <button className={styles.sidebarButton}>Others</button>
+          {JSON.parse(localStorage.getItem("cities")!).map(
+            (city: City) =>
+              city.name !== props.location.split(",")[0] && (
+                <button
+                  key={city.name}
+                  onClick={() => {
+                    props.onSearch(city.name);
+                    setShowMenu(false);
+                  }}
+                >
+                  {city.name}
+                </button>
+              )
+          )}
         </div>
       </div>
       <div className={styles.header}>
-        <BsPin size={20} />
+        {isCityPinned(props.location.split(",")[0]) ? (
+          <BsPinFill
+            size={30}
+            onClick={() => pinCity(props.location.split(",")[0])}
+          />
+        ) : (
+          <BsPin
+            size={30}
+            onClick={() => pinCity(props.location.split(",")[0])}
+          />
+        )}
+
         <p className={styles.location}>{props.location}</p>
 
-        <BsMenuButtonFill
-          style={{ cursor: "pointer" }}
-          size={20}
-          enableBackground={"white"}
-          color="black"
-          onClick={() => setShowMenu(true)}
-        />
+        <div className={styles.topRight}>
+          <div className={styles.themeMode}>
+            {props.isDarkMode ? (
+              <>
+                <BsMoonFill size={30} />
+                <BsSun size={30} onClick={() => props.setIsDarkMode(false)} />
+              </>
+            ) : (
+              <>
+                <BsMoon size={30} onClick={() => props.setIsDarkMode(true)} />
+                <BsSunFill size={30} color="gold" />
+              </>
+            )}
+          </div>
+          {props.isDarkMode ? (
+            <BsMenuButtonFill
+              style={{ cursor: "pointer" }}
+              size={30}
+              color="white"
+              onClick={() => setShowMenu(true)}
+            />
+          ) : (
+            <BsMenuButtonFill
+              style={{ cursor: "pointer" }}
+              size={30}
+              color="black"
+              onClick={() => setShowMenu(true)}
+            />
+          )}
+        </div>
       </div>
     </>
   );

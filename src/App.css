@@ -1,3 +1,17 @@
+:root {
+  --color-bg-blue: #c7dfff;
+  --color-bg-indigo: rgb(146, 97, 205);
+  --color-primary: rgba(54, 100, 162, 0.3);
+  --color-white: #fff;
+  --color-black: #000;
+}
+[data-theme="dark"] {
+  --color-bg-blue: #1a1a2e;
+  --color-bg-indigo: #2f1b52;
+  --color-primary: rgba(108, 162, 255, 0.2);
+  --color-white: #111;
+  --color-black: #eaeaea;
+}
 * {
   margin: 0;
   padding: 0;
@@ -8,7 +22,12 @@ html,
 body {
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom right, #c7dfff, 80%, rgb(146, 97, 205));
+  background: linear-gradient(
+    to bottom right,
+    var(--color-bg-blue),
+    80%,
+    var(--color-bg-indigo)
+  );
 }
 .row {
   display: flex;
