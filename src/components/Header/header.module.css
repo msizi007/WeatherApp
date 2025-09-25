@@ -1,0 +1,9 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+.location{
+    font-size: 1.2rem;
+    font-weight: bold;
+}
