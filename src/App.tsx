@@ -1,4 +1,3 @@
-import { FaSun } from "react-icons/fa6";
 import "./App.css";
 import Header from "./components/Header/Header";
 import WeatherCard from "./components/WeatherCard/WeatherCard";
@@ -7,11 +6,39 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Hourlychart from "./components/HourlyChart/Hourlychart";
 
+interface Hour {
+  temp_c: number;
+  chance_of_rain: number;
+  // other properties...
+}
+
+type ForecastDay = {
+  hour: Hour[];
+  day: {
+    avgtemp_c: number;
+  };
+};
+
+interface WeatherData {
+  location: {
+    name: string;
+    region: string;
+    country: string;
+  };
+  forecast: {
+    forecastday: ForecastDay[];
+  };
+  current: {
+    temp_c: number;
+  };
+  // other properties...
+}
+
 function App() {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
   const [city, setCity] = useState("");
-  const [weatherData, setWeatherData] = useState<any>(null);
+  const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [search, setSearch] = useState("");
   const [hourlyTemp, setHourlyTemp] = useState<number[]>([]);
   const [hourlyRain, setHourlyRain] = useState<number[]>([]);
@@ -38,12 +65,12 @@ function App() {
       setWeatherData(response.data);
       setHourlyTemp(
         response.data.forecast.forecastday[0].hour.map(
-          (hour: any) => hour.temp_c
+          (hour: Hour) => hour.temp_c
         )
       );
       setHourlyRain(
         response.data.forecast.forecastday[0].hour.map(
-          (hour: any) => hour.chance_of_rain
+          (hour: Hour) => hour.chance_of_rain
         )
       );
       console.log("forecast...", response.data.forecast.forecastday[0]);
