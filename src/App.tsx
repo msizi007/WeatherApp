@@ -220,7 +220,9 @@ function App() {
           />
         </>
       ) : (
-        <h2>Loading...</h2>
+        <div className="center">
+          <h1>Loading...</h1>
+        </div>
       )}
     </>
   );
