@@ -27,8 +27,9 @@ body {
     to bottom right,
     var(--color-bg-blue),
     80%,
-    var(--color-bg-indigo)
+    var(--color-bg-indigo) 100%
   );
+  background-attachment: fixed;
 }
 .row {
   display: flex;
