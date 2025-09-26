@@ -1,4 +1,5 @@
 import { getCities, type City } from "../../utils/storage";
+import Switch from "../SwitchInput/Switch";
 import styles from "./sidebar.module.css";
 
 interface Props {
@@ -27,26 +28,12 @@ export default function Sidebar(props: Props) {
       <div className={styles.sidebarMenus}>
         <span className={styles.themeFilter}>
           <span className={styles.text}>Dark Mode</span>
-          <label className={styles.switch}>
-            <input
-              className={styles.input}
-              type="checkbox"
-              onClick={() => props.setIsDarkMode(!props.isDarkMode)}
-            />
-            <span className={`${styles.slider} ${styles.round}`}></span>
-          </label>
+          <Switch state={props.isDarkMode} setState={props.setIsDarkMode} />
         </span>
 
         <span className={styles.unitFilter}>
           <span className={styles.text}>Celcius (°C)</span>
-          <label className={styles.switch}>
-            <input
-              className={styles.input}
-              type="checkbox"
-              onClick={() => props.setIsCelcius(!props.isCelcius)}
-            />
-            <span className={`${styles.slider} ${styles.round}`}></span>
-          </label>
+          <Switch state={props.isCelcius} setState={props.setIsCelcius} />
           <span className={styles.text}>Fahrenheit (°F)</span>
         </span>
       </div>
