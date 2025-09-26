@@ -1,6 +1,6 @@
 .sidebar {
   position: fixed;
-  width: 50%;
+  width: 40%;
   height: 100%;
   right: 0;
   background-color: rgba(10, 10, 10, 0.8);
@@ -106,4 +106,27 @@
   color: white;
   font-weight: 500;
   font-size: 1.2rem;
+}
+
+.title {
+  margin-top: 2rem;
+  text-align: center;
+  color: white;
+}
+.hr {
+  background-color: white;
+  font-weight: 500;
+  height: 0.2rem;
+  margin: 0.5rem 0;
+}
+.button {
+  width: 100%;
+  border: none;
+  padding: 0.6rem 1rem;
+  font-weight: 500;
+  font-size: 1rem;
+}
+.button:hover {
+  color: white;
+  background-color: gray;
 }

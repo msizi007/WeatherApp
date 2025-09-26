@@ -4,4 +4,10 @@
   padding: 1rem;
   border-radius: 1rem;
   margin: 3%;
+  min-height: 300px;
+}
+
+.chart :global(svg) {
+  width: 100% !important;
+  height: 100% !important;
 }
