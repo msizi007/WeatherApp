@@ -4,6 +4,7 @@
   --color-primary: rgba(54, 100, 162, 0.3);
   --color-white: #fff;
   --color-black: #000;
+  --color-sidebar: rgba(10, 10, 10, 0.8);
 }
 [data-theme="dark"] {
   --color-bg-blue: #1a1a2e;

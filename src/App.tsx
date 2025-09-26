@@ -9,6 +9,7 @@ import { addCity } from "./utils/storage";
 
 interface Hour {
   temp_c: number;
+  temp_f: number;
   chance_of_rain: number;
   // other properties...
 }
@@ -17,6 +18,7 @@ type ForecastDay = {
   hour: Hour[];
   day: {
     avgtemp_c: number;
+    avgtemp_f: number;
     avghumidity: number;
     condition: {
       text: string;
@@ -36,6 +38,7 @@ interface WeatherData {
   };
   current: {
     temp_c: number;
+    temp_f: number;
     humidity: number;
     wind_kph: number;
   };
@@ -52,6 +55,8 @@ function App() {
   const [hourlyTemp, setHourlyTemp] = useState<number[]>([]);
   const [hourlyRain, setHourlyRain] = useState<number[]>([]);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isCelcius, setIsCelcius] = useState(true);
+  const [changeCity, setChangeCity] = useState("");
 
   useEffect(() => {
     if (isDarkMode) {
@@ -81,11 +86,23 @@ function App() {
       setCity(response.data.location.name);
       setCountry(response.data.location.country);
       setWeatherData(response.data);
-      setHourlyTemp(
-        response.data.forecast.forecastday[0].hour.map(
-          (hour: Hour) => hour.temp_c
-        )
-      );
+
+      // if units in celcius
+      if (isCelcius) {
+        setHourlyTemp(
+          response.data.forecast.forecastday[0].hour.map(
+            (hour: Hour) => hour.temp_c
+          )
+        );
+      }
+      // if units in fahrenheit
+      else {
+        setHourlyTemp(
+          response.data.forecast.forecastday[0].hour.map(
+            (hour: Hour) => hour.temp_f
+          )
+        );
+      }
       setHourlyRain(
         response.data.forecast.forecastday[0].hour.map(
           (hour: Hour) => hour.chance_of_rain
@@ -100,6 +117,12 @@ function App() {
       console.error("Failed to fetch weather:", err);
     }
   };
+
+  useEffect(() => {
+    if (search) {
+      fetchWeather(search, 7);
+    }
+  }, [changeCity]);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -132,6 +155,11 @@ function App() {
             isDarkMode={isDarkMode}
             setIsDarkMode={setIsDarkMode}
             onSearch={(city) => fetchWeather(city, 7)}
+            isCelcius={isCelcius}
+            setIsCelcius={setIsCelcius}
+            setSearchInput={setSearch}
+            setCityChange={setChangeCity}
+            fetchWeather={() => fetchWeather(changeCity, 7)}
           />
           <Searchbar
             input={search}
@@ -141,33 +169,55 @@ function App() {
           <div className="row">
             <WeatherCard
               day="Today"
-              temperature={Math.round(
-                weatherData.forecast.forecastday[0].day.avgtemp_c
-              )}
-              status={weatherData.forecast.forecastday[0].day.condition.text}
+              temperature={
+                isCelcius
+                  ? Math.round(
+                      weatherData.forecast.forecastday[0].day.avgtemp_c
+                    )
+                  : Math.round(
+                      weatherData.forecast.forecastday[0].day.avgtemp_f
+                    )
+              }
               humidity={weatherData.forecast.forecastday[0].day.avghumidity}
               windSpeed={weatherData.forecast.forecastday[0].day.maxwind_kph}
+              status={weatherData.forecast.forecastday[0].day.condition.text.trim()}
             />
             <WeatherCard
               day="Tommorow"
-              temperature={Math.round(
-                weatherData.forecast.forecastday[1].day.avgtemp_c
-              )}
+              temperature={
+                isCelcius
+                  ? Math.round(
+                      weatherData.forecast.forecastday[1].day.avgtemp_c
+                    )
+                  : Math.round(
+                      weatherData.forecast.forecastday[1].day.avgtemp_f
+                    )
+              }
               humidity={weatherData.forecast.forecastday[1].day.avghumidity}
               windSpeed={weatherData.forecast.forecastday[1].day.maxwind_kph}
-              status={weatherData.forecast.forecastday[1].day.condition.text}
+              status={weatherData.forecast.forecastday[1].day.condition.text.trim()}
             />
             <WeatherCard
               day="In 2 Days"
-              temperature={Math.round(
-                weatherData.forecast.forecastday[2].day.avgtemp_c
-              )}
+              temperature={
+                isCelcius
+                  ? Math.round(
+                      weatherData.forecast.forecastday[2].day.avgtemp_c
+                    )
+                  : Math.round(
+                      weatherData.forecast.forecastday[2].day.avgtemp_f
+                    )
+              }
               humidity={weatherData.forecast.forecastday[2].day.avghumidity}
               windSpeed={weatherData.forecast.forecastday[2].day.maxwind_kph}
-              status={weatherData.forecast.forecastday[2].day.condition.text}
+              status={weatherData.forecast.forecastday[2].day.condition.text.trim()}
             />
           </div>
-          <Hourlychart temp_data={hourlyTemp} rain_data={hourlyRain} />
+          <Hourlychart
+            temp_data={hourlyTemp}
+            rain_data={hourlyRain}
+            isCelcius={isCelcius}
+          />
         </>
       ) : (
         <h2>Loading...</h2>

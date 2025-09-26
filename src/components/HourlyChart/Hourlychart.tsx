@@ -4,17 +4,20 @@ import styles from "./hourlychart.module.css";
 interface Props {
   temp_data: number[];
   rain_data: number[];
+  isCelcius: boolean;
 }
 
 export default function Hourlychart(props: Props) {
   return (
     <div className={styles.chart}>
       <LineChart
+        height={300}
+        margin={{ left: 10, right: 20, top: 20, bottom: 20 }}
         title="Hourly Focast"
         series={[
           {
             data: props.temp_data,
-            label: "temp (°C)",
+            label: props.isCelcius ? "temp (°C)" : "temp (°F)",
           },
           {
             data: props.rain_data,
@@ -52,7 +55,7 @@ export default function Hourlychart(props: Props) {
             ],
           },
         ]}
-        yAxis={[{ width: 100 }]}
+        yAxis={[{ width: 30 }]}
       />
     </div>
   );
