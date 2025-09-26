@@ -10,8 +10,8 @@
 }
 .closeSidebar {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 1.5rem;
+  right: 1.5rem;
   color: white;
   font-weight: 700;
   font-size: 2rem;
@@ -34,8 +34,8 @@
 .switch {
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 34px;
+  width: 4rem;
+  height: 2.3rem;
 }
 
 /* Hide default HTML checkbox */
@@ -125,10 +125,24 @@
   padding: 0.6rem 1rem;
   font-weight: 500;
   font-size: 1rem;
-  background-color:var(--color-primary);
+  background-color: var(--color-primary);
   color: white;
 }
 .button:hover {
   color: white;
   background-color: gray;
+}
+
+@media (max-width: 320px) {
+}
+@media (max-width: 480px) {
+}
+@media (max-width: 768px) {
+  .sidebar {
+    width: 80%;
+  }
+}
+@media (max-width: 1024px) {
+}
+@media (max-width: 1200px) {
 }

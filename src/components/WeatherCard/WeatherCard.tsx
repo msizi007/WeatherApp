@@ -37,11 +37,11 @@ export default function WeatherCard(props: Props) {
       <div className={styles.row}>
         <div className={styles.col}>
           <h4>Humidity</h4>
-          <p>{props.humidity}%</p>
+          <p className={styles.humidity}>{props.humidity}%</p>
         </div>
         <div className={styles.col}>
           <h4>Wind Speed</h4>
-          <p>{props.windSpeed} km/h</p>
+          <p className={styles.windSpeed}>{props.windSpeed} km/h</p>
         </div>
       </div>
     </div>
