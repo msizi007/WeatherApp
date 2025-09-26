@@ -1,5 +1,7 @@
 # Weather App
 
+* Now publicly availbable on: https://weatherapp-3daa.onrender.com/
+
 - This is an app that allows users to browser different cities and check for the weather. Weather is possible through a real-time API available on RapidAPI.com (https://rapidapi.com/weatherapi/api/weatherapi-com)
 
 ![WeatherApp](https://socialify.git.ci/msizi007/WeatherApp/image?language=1&owner=1&name=1&stargazers=1&theme=Light)
