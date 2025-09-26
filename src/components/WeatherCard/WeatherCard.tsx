@@ -1,46 +1,49 @@
 import styles from "./weathercard.module.css";
 
-import { FaCloudRain, FaSun } from "react-icons/fa6";
-import { BsCloudSun } from "react-icons/bs";
-import { IoRainyOutline } from "react-icons/io5";
+import { FaSnowflake, FaCloudRain, FaBolt, FaSmog } from "react-icons/fa";
+import { BsSnow, BsSun } from "react-icons/bs";
+import { getWeatherCategory } from "../../utils/weather";
 
 interface Props {
   day: string;
   temperature: number;
+  humidity: number;
+  windSpeed: number;
+  status: string;
 }
 
 export default function WeatherCard(props: Props) {
-  const statusIcon = {
-    Freezing: <IoRainyOutline size={50} />,
-    Cool: <BsCloudSun size={50} />,
-    Warm: <FaCloudRain size={50} />,
-    Sunny: <FaSun size={50} />,
-    "Extremely Hot": <FaCloudRain size={50} />,
-    unknown: null, // or you can provide a default icon here
+  const weatherIcons = {
+    freezing: <FaSnowflake size={50} color="#00bfff" />,
+    extremelyCold: <BsSnow size={50} color="#1e90ff" />,
+    coldRainy: <FaCloudRain size={50} color="#00aaff" />,
+    stormy: <FaBolt size={50} color="gold" />,
+    foggy: <FaSmog size={50} color="gray" />,
+    clearOrCloudy: <BsSun size={50} color="gold" />,
   };
 
-  function getStatus(temp: number) {
-    switch (true) {
-      case temp <= 10:
-        return "Freezing";
-      case temp <= 20:
-        return "Cool";
-      case temp <= 30:
-        return "Sunny";
-      case temp <= 40:
-        return "Extremely Hot";
+  // Example: render icon by category
+  // const category = "stormy";
+  // return weatherCategoryIcons[category];
 
-      default:
-        return "unknown";
-    }
-  }
-  const status = getStatus(props.temperature);
+  const category = getWeatherCategory(props.status);
+
   return (
     <div className={styles.card}>
       <h2 className={styles.day}>{props.day}</h2>
-      {statusIcon[status]}
+      {weatherIcons[category!]}
       <h2 className={styles.temperature}>{props.temperature}°</h2>
-      <p className={styles.status}>{status}</p>
+      <p className={styles.status}>{props.status}</p>
+      <div className={styles.row}>
+        <div className={styles.col}>
+          <h4>Humidity</h4>
+          <p>{props.humidity}%</p>
+        </div>
+        <div className={styles.col}>
+          <h4>Wind Speed</h4>
+          <p>{props.windSpeed} km/h</p>
+        </div>
+      </div>
     </div>
   );
 }

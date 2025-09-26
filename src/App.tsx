@@ -17,6 +17,11 @@ type ForecastDay = {
   hour: Hour[];
   day: {
     avgtemp_c: number;
+    avghumidity: number;
+    condition: {
+      text: string;
+    };
+    maxwind_kph: number;
   };
 };
 
@@ -31,6 +36,8 @@ interface WeatherData {
   };
   current: {
     temp_c: number;
+    humidity: number;
+    wind_kph: number;
   };
   // other properties...
 }
@@ -39,6 +46,7 @@ function App() {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
   const [city, setCity] = useState("");
+  const [country, setCountry] = useState("");
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [search, setSearch] = useState("");
   const [hourlyTemp, setHourlyTemp] = useState<number[]>([]);
@@ -70,9 +78,8 @@ function App() {
         }
       );
       console.log("Weather data:", response.data);
-      setCity(
-        `${response.data.location.name}, ${response.data.location.region}, ${response.data.location.country}`
-      );
+      setCity(response.data.location.name);
+      setCountry(response.data.location.country);
       setWeatherData(response.data);
       setHourlyTemp(
         response.data.forecast.forecastday[0].hour.map(
@@ -85,11 +92,15 @@ function App() {
         )
       );
 
+      console.log("data", response.data.forecast.forecastday[0]);
+
+      // adding the city
       addCity({ name: response.data.location.name, isPinned: false });
     } catch (err) {
       console.error("Failed to fetch weather:", err);
     }
   };
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -116,7 +127,8 @@ function App() {
       {weatherData ? (
         <>
           <Header
-            location={city}
+            city={city}
+            country={country}
             isDarkMode={isDarkMode}
             setIsDarkMode={setIsDarkMode}
             onSearch={(city) => fetchWeather(city, 7)}
@@ -129,19 +141,30 @@ function App() {
           <div className="row">
             <WeatherCard
               day="Today"
-              temperature={Math.round(weatherData.current.temp_c)}
+              temperature={Math.round(
+                weatherData.forecast.forecastday[0].day.avgtemp_c
+              )}
+              status={weatherData.forecast.forecastday[0].day.condition.text}
+              humidity={weatherData.forecast.forecastday[0].day.avghumidity}
+              windSpeed={weatherData.forecast.forecastday[0].day.maxwind_kph}
             />
             <WeatherCard
               day="Tommorow"
               temperature={Math.round(
                 weatherData.forecast.forecastday[1].day.avgtemp_c
               )}
+              humidity={weatherData.forecast.forecastday[1].day.avghumidity}
+              windSpeed={weatherData.forecast.forecastday[1].day.maxwind_kph}
+              status={weatherData.forecast.forecastday[1].day.condition.text}
             />
             <WeatherCard
               day="In 2 Days"
               temperature={Math.round(
                 weatherData.forecast.forecastday[2].day.avgtemp_c
               )}
+              humidity={weatherData.forecast.forecastday[2].day.avghumidity}
+              windSpeed={weatherData.forecast.forecastday[2].day.maxwind_kph}
+              status={weatherData.forecast.forecastday[2].day.condition.text}
             />
           </div>
           <Hourlychart temp_data={hourlyTemp} rain_data={hourlyRain} />
