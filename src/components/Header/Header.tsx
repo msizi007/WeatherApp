@@ -8,6 +8,7 @@ import {
   BsSunFill,
 } from "react-icons/bs";
 import { isCityPinned, pinCity, type City } from "../../utils/storage";
+import Sidebar from "../Sidebar/Sidebar";
 
 interface Props {
   city: string;
@@ -22,33 +23,12 @@ export default function Header(props: Props) {
 
   return (
     <>
-      <div
-        className={styles.sidebar}
-        style={{ display: showMenu ? "block" : "none" }}
-      >
-        <span
-          className={styles.closeSidebar}
-          onClick={() => setShowMenu(false)}
-        >
-          X
-        </span>
-        {/* <div className={styles.sidebarMenus}>
-          {JSON.parse(localStorage.getItem("cities")!).map(
-            (city: City) =>
-              city.name !== props.location.split(",")[0] && (
-                <button
-                  key={city.name}
-                  onClick={() => {
-                    props.onSearch(city.name);
-                    setShowMenu(false);
-                  }}
-                >
-                  {city.name}
-                </button>
-              )
-          )}
-        </div> */}
-      </div>
+      <Sidebar
+        showMenu={showMenu}
+        setShowMenu={setShowMenu}
+        isDarkMode={props.isDarkMode}
+        setIsDarkMode={props.setIsDarkMode}
+      />
       <div className={styles.header}>
         {/* {isCityPinned(props.location.split(",")[0]) ? (
           <BsPinFill
@@ -67,21 +47,6 @@ export default function Header(props: Props) {
         </p>
 
         <div className={styles.topRight}>
-          <div className={styles.theme}>
-            {props.isDarkMode ? (
-              <BsSunFill
-                size={30}
-                color="gold"
-                onClick={() => props.setIsDarkMode(false)}
-              />
-            ) : (
-              <BsMoonFill
-                size={30}
-                color="black"
-                onClick={() => props.setIsDarkMode(true)}
-              />
-            )}
-          </div>
           {props.isDarkMode ? (
             <BsMenuButtonFill
               style={{ cursor: "pointer" }}
