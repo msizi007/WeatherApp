@@ -23,7 +23,12 @@ export default function Searchbar(props: Props) {
           value={props.input}
           onChange={(e) => props.setInput(e.target.value)}
         />
-        <BiSearch className={styles.icon} size={30} onClick={props.onSearch} />
+        <BiSearch
+          className={styles.icon}
+          size={30}
+          color="white"
+          onClick={props.onSearch}
+        />
       </form>
     </div>
   );

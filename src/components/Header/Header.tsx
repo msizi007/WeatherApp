@@ -43,7 +43,7 @@ export default function Header(props: Props) {
           {isPinned ? (
             <>
               <BsStarFill
-                color=""
+                color="#3f51b5ee"
                 size={30}
                 onClick={() => {
                   pinCity(props.city);
@@ -80,7 +80,7 @@ export default function Header(props: Props) {
             <BsMenuButtonFill
               style={{ cursor: "pointer" }}
               size={30}
-              color="black"
+              color="#3f51b5ee"
               onClick={() => setShowMenu(true)}
             />
           )}

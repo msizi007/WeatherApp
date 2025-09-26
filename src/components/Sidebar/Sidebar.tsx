@@ -70,22 +70,6 @@ export default function Sidebar(props: Props) {
             {city.name}
           </button>
         ))}
-      {/* <div className={styles.sidebarMenus}>
-          {JSON.parse(localStorage.getItem("cities")!).map(
-            (city: City) =>
-              city.name !== props.location.split(",")[0] && (
-                <button
-                  key={city.name}
-                  onClick={() => {
-                    props.onSearch(city.name);
-                    setShowMenu(false);
-                  }}
-                >
-                  {city.name}
-                </button>
-              )
-          )}
-        </div> */}
     </div>
   );
 }
