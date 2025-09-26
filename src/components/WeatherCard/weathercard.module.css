@@ -33,3 +33,30 @@
   flex-direction: column;
   align-items: center;
 }
+.humidity,
+.windSpeed {
+  font-weight: 900;
+}
+
+@media (max-width: 320px) {
+}
+@media (max-width: 480px) {
+}
+@media (max-width: 768px) {
+  .card {
+    width: auto;
+    margin: 1rem;
+    padding: 0.6rem;
+  }
+  .day {
+    font-size: 1.5rem;
+    margin: 0.5rem;
+  }
+  .temperature {
+    font-size: 3.5rem;
+  }
+}
+@media (max-width: 1024px) {
+}
+@media (max-width: 1200px) {
+}

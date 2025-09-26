@@ -25,3 +25,17 @@
   font-size: 0.9rem;
   font-weight: 700;
 }
+
+@media (max-width: 320px) {
+}
+@media (max-width: 480px) {
+}
+@media (max-width: 768px) {
+  html {
+    font-size: 90%;
+  }
+}
+@media (max-width: 1024px) {
+}
+@media (max-width: 1200px) {
+}
