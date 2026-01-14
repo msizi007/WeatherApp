@@ -35,3 +35,16 @@ npm run dev
 - RapidAPI (API)
 
 ###### Author: M.S Mwelase
+
+#### Screenshort
+<table border="0">
+  <tr>
+    <td>
+      <img src="https://github.com/user-attachments/assets/e237b3b4-3941-4819-b479-663c53ce3b59" width="100%" />
+    </td>
+    <td>
+      <img src="https://github.com/user-attachments/assets/2c06cad8-f525-466a-a75f-3bf14c92c589" width="100%" />
+    </td>
+  </tr>
+</table>
+
